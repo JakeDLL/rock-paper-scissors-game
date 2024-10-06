@@ -44,3 +44,58 @@ function getHumanChoice() {
 		}
 	}
 }
+
+
+function playGame() {
+	function playRound(humanChoice, computerChoice) {
+		let hc = humanChoice;
+		let cc = computerChoice;
+		
+		switch (hc) {
+			case cc:
+				console.log(`It's a draw!`);
+				break;
+			case 'rock':
+				if (cc === 'paper') {
+					console.log(`You lose! Paper beats rock`);
+					computerScore++;
+					break;
+				}
+				console.log(`You win! Rock beats scissors`);
+				humanScore++;
+				break;
+			case 'paper':
+				if (cc === 'scissors') {
+					console.log(`You lose! Scissors beat paper`);
+					computerScore++;
+					break;
+				}
+				console.log(`You win! Paper beats rock`);
+				humanScore++;
+				break;
+			case 'scissors':
+				if (cc === 'rock') {
+					console.log(`You lose! Rock beats scissors`);
+					computerScore++;
+					break;
+				}
+				console.log(`You win! Scissors beats paper`);
+				humanScore++;
+				break;
+			default:
+				console.log(`There was an error`);
+		}
+	}
+
+	let humanScore = 0;
+	let computerScore = 0; 
+
+	for (i = 0; i < 5; i++) {
+		playRound(getHumanChoice(), getComputerChoice());
+	}
+	const message = (humanScore >= computerScore)? `Congratulations! You won!` : `You lost`;
+	console.log(`User ${humanScore}. PC ${computerScore}. ${message}`);
+	alert(message);
+}
+
+playGame();
