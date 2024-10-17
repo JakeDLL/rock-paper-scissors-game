@@ -90,10 +90,7 @@ function playGame() {
 	let humanScore = 0;
 	let computerScore = 0; 
 
-	for (i = 0; i < 5; i++) {
-		playRound(getHumanChoice(), getComputerChoice());
-	}
-	const message = (humanScore >= computerScore)? `Congratulations! You won!` : `You lost`;
+	const message = (humanScore > computerScore)? `Congratulations! You won!` : `You lost`;
 	console.log(`User ${humanScore}. PC ${computerScore}. ${message}`);
 	alert(message);
 }
