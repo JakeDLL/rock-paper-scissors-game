@@ -20,29 +20,6 @@ function getComputerChoice() {
 	}
 }
 
-/***
- * PSEUDOCODE FOR HUMAN CHOICE
- *
- * Declare function named getHumanChoice that will return one of the valid choices
- * 	create var to store humanChoice from a prompt
- * 	check to see if input is valid
- * 	return input as lowercase to be checked against computerchoice
- * 	if not valid, prompt again
-***/
-
-function getHumanChoice(choice) {
-	// While statement continues running until user input is valid and returns it as lowercase string
-	
-	while (true) {
-		if (choice === 'rock' || choice === 'paper' || choice === 'scissors') {
-			return choice;
-		} else {
-			alert(`That's not a valid option. Please choose rock, paper, or scissors.`);
-			return 'ERROR';
-		}
-	}
-}
-
 function playRound(humanChoice, computerChoice) {
 	let hc = humanChoice;
 	let cc = computerChoice;
@@ -104,7 +81,7 @@ function playGame() {
 		buttonList.appendChild(button);
 	}
 
-	document.querySelectorAll('.choice').forEach(item => item.addEventListener('click', event => playRound(getHumanChoice(event.target.id), getComputerChoice())));
+	document.querySelectorAll('.choice').forEach(item => item.addEventListener('click', event => playRound(event.target.id, getComputerChoice())));
 }
 
 
