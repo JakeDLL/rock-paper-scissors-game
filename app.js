@@ -30,69 +30,89 @@ function getComputerChoice() {
  * 	if not valid, prompt again
 ***/
 
-// Declares function to check and return user input
-function getHumanChoice() {
-	// Gets user input and converts it to lowercase
-	let choice = prompt(`Make a choice. Rock, paper, or scissors?`).toLowerCase();
-
+function getHumanChoice(choice) {
 	// While statement continues running until user input is valid and returns it as lowercase string
+	
 	while (true) {
 		if (choice === 'rock' || choice === 'paper' || choice === 'scissors') {
 			return choice;
 		} else {
-			choice = prompt(`That's not a valid option. Please choose rock, paper, or scissors.`);
+			alert(`That's not a valid option. Please choose rock, paper, or scissors.`);
+			return 'ERROR';
 		}
 	}
 }
 
+function playRound(humanChoice, computerChoice) {
+	let hc = humanChoice;
+	let cc = computerChoice;
+	
+	switch (hc) {
+		case cc:
+			message.textContent = `It's a draw!`;
+			break;
+		case 'rock':
+			if (cc === 'paper') {
+				message.textContent = `You lose! Paper beats rock`;
+				computerScore++;
+				break;
+			}
+			message.textContent = `You win! Rock beats scissors`;
+			humanScore++;
+			break;
+		case 'paper':
+			if (cc === 'scissors') {
+				message.textContent = `You lose! Scissors beat paper`;
+				computerScore++;
+				break;
+			}
+			message.textContent = `You win! Paper beats rock`;
+			humanScore++;
+			break;
+		case 'scissors':
+			if (cc === 'rock') {
+				message.textContent = `You lose! Rock beats scissors`;
+				computerScore++;
+				break;
+			}
+			message.textContent = `You win! Scissors beats paper`;
+			humanScore++;
+			break;
+		default:
+			message.textContent = `There was an error`;
+	}
+	++rounds;
+
+	if (rounds === 5) {
+		message.textContent = (humanScore > computerScore)? 'Congratulations! You won the game! Make a choice to play again' : 'You lost :( Make a choice to play again';
+		rounds = 0;
+		humanScore = 0;
+		computerScore = 0;
+	}
+}
 
 function playGame() {
-	function playRound(humanChoice, computerChoice) {
-		let hc = humanChoice;
-		let cc = computerChoice;
-		
-		switch (hc) {
-			case cc:
-				console.log(`It's a draw!`);
-				break;
-			case 'rock':
-				if (cc === 'paper') {
-					console.log(`You lose! Paper beats rock`);
-					computerScore++;
-					break;
-				}
-				console.log(`You win! Rock beats scissors`);
-				humanScore++;
-				break;
-			case 'paper':
-				if (cc === 'scissors') {
-					console.log(`You lose! Scissors beat paper`);
-					computerScore++;
-					break;
-				}
-				console.log(`You win! Paper beats rock`);
-				humanScore++;
-				break;
-			case 'scissors':
-				if (cc === 'rock') {
-					console.log(`You lose! Rock beats scissors`);
-					computerScore++;
-					break;
-				}
-				console.log(`You win! Scissors beats paper`);
-				humanScore++;
-				break;
-			default:
-				console.log(`There was an error`);
-		}
+	start.remove();
+	const choices = ['rock', 'paper', 'scissors'];
+
+	for (let i = 0; i < choices.length; i++) {
+		let button = document.createElement('button');
+		button.classList = 'choice';
+		button.id = choices[i];
+		button.textContent = choices[i];
+		button.style.marginRight = '10px';
+		buttonList.appendChild(button);
 	}
 
-	let humanScore = 0;
-	let computerScore = 0; 
-
-	const message = (humanScore > computerScore)? `Congratulations! You won!` : `You lost`;
-	console.log(`User ${humanScore}. PC ${computerScore}. ${message}`);
-	alert(message);
+	document.querySelectorAll('.choice').forEach(item => item.addEventListener('click', event => playRound(getHumanChoice(event.target.id), getComputerChoice())));
 }
 
-playGame();
+
+let rounds = 0;
+let humanScore = 0;
+let computerScore = 0; 
+let buttonList = document.querySelector('#buttons');
+let start = document.querySelector('#game-start');
+let message = document.querySelector('#message');
+
+start.addEventListener('click', playGame);
